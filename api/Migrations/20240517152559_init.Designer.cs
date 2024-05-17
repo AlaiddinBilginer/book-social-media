@@ -12,7 +12,7 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240516103035_init")]
+    [Migration("20240517152559_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -121,6 +121,29 @@ namespace api.Migrations
                     b.ToTable("Books");
                 });
 
+            modelBuilder.Entity("api.models.BookCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("BookCategories");
+                });
+
             modelBuilder.Entity("api.models.BookComment", b =>
                 {
                     b.Property<int>("Id")
@@ -154,16 +177,11 @@ namespace api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BookId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BookId");
 
                     b.ToTable("Categories");
                 });
@@ -186,6 +204,25 @@ namespace api.Migrations
                     b.Navigation("Author");
                 });
 
+            modelBuilder.Entity("api.models.BookCategory", b =>
+                {
+                    b.HasOne("api.models.Book", "Book")
+                        .WithMany("BookCategories")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.models.Category", "Category")
+                        .WithMany("BookCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("api.models.BookComment", b =>
                 {
                     b.HasOne("api.models.Book", "Book")
@@ -193,13 +230,6 @@ namespace api.Migrations
                         .HasForeignKey("BookId");
 
                     b.Navigation("Book");
-                });
-
-            modelBuilder.Entity("api.models.Category", b =>
-                {
-                    b.HasOne("api.models.Book", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("BookId");
                 });
 
             modelBuilder.Entity("api.models.Author", b =>
@@ -211,9 +241,14 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.models.Book", b =>
                 {
-                    b.Navigation("BookComments");
+                    b.Navigation("BookCategories");
 
-                    b.Navigation("Categories");
+                    b.Navigation("BookComments");
+                });
+
+            modelBuilder.Entity("api.models.Category", b =>
+                {
+                    b.Navigation("BookCategories");
                 });
 #pragma warning restore 612, 618
         }

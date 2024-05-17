@@ -30,6 +30,19 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AuthorComments",
                 columns: table => new
                 {
@@ -73,6 +86,32 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BookCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BookId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookCategories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BookCategories_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookCategories_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BookComments",
                 columns: table => new
                 {
@@ -92,29 +131,20 @@ namespace api.Migrations
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BookId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Categories_Books_BookId",
-                        column: x => x.BookId,
-                        principalTable: "Books",
-                        principalColumn: "Id");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AuthorComments_AuthorId",
                 table: "AuthorComments",
                 column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookCategories_BookId",
+                table: "BookCategories",
+                column: "BookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookCategories_CategoryId",
+                table: "BookCategories",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookComments_BookId",
@@ -125,11 +155,6 @@ namespace api.Migrations
                 name: "IX_Books_AuthorId",
                 table: "Books",
                 column: "AuthorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Categories_BookId",
-                table: "Categories",
-                column: "BookId");
         }
 
         /// <inheritdoc />
@@ -137,6 +162,9 @@ namespace api.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AuthorComments");
+
+            migrationBuilder.DropTable(
+                name: "BookCategories");
 
             migrationBuilder.DropTable(
                 name: "BookComments");

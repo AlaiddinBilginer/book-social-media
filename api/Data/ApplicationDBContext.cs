@@ -18,5 +18,7 @@ namespace api.Data
         public DbSet<BookComment> BookComments { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<AuthorComment> AuthorComments { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<BookCategory> BookCategories { get; set; }
     }
 }

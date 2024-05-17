@@ -16,5 +16,6 @@ namespace api.models
         public int? AuthorId { get; set; }
         public Author? Author { get; set; }
         public List<BookComment> BookComments { get; set; } = new List<BookComment>();
+        public List<BookCategory> BookCategories { get; set; } = new List<BookCategory>();
     }
 }
