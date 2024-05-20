@@ -22,5 +22,18 @@ namespace api.Mappers
                 AuthorId = bookModel.AuthorId
             };
         }
+
+        public static Book ToBookFromCreateDto(this CreateBookRequestDto bookDto)
+        {
+            return new Book
+            {
+                Name = bookDto.Name,
+                Description = bookDto.Description,
+                Page = bookDto.Page,
+                PublicationDate = bookDto.PublicationDate,
+                Image = bookDto.Image,
+                AuthorId = bookDto.AuthorId
+            };
+        }
     }
 }

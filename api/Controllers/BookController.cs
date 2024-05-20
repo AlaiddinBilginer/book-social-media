@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
+using api.Dtos.Book;
 using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,6 +40,55 @@ namespace api.Controllers
             return Ok(book.ToBookDto());
         }
 
+        [HttpPost]
+        public IActionResult Create([FromBody] CreateBookRequestDto bookDto)
+        {
+            var bookModel = bookDto.ToBookFromCreateDto();
+            _context.Books.Add(bookModel);
+            _context.SaveChanges();
+            return CreatedAtAction(nameof(GetById), new { id = bookModel.Id }, bookModel.ToBookDto());
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult Update([FromRoute] int id, [FromBody] UpdateBookRequestDto bookDto)
+        {
+            var bookModel = _context.Books.FirstOrDefault(x => x.Id == id);
+
+            if (bookModel == null)
+            {
+                return NotFound();
+            }
+
+            bookModel.Name = bookDto.Name;
+            bookModel.Description = bookDto.Description;
+            bookModel.Page = bookDto.Page;
+            bookModel.PublicationDate = bookDto.PublicationDate;
+            bookModel.Image = bookDto.Image;
+            bookModel.AuthorId = bookDto.AuthorId;
+
+            _context.SaveChanges();
+
+            return Ok(bookModel.ToBookDto());
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            var bookModel = _context.Books.FirstOrDefault(x => x.Id == id);
+
+            if (bookModel == null)
+            {
+                return NotFound();
+            }
+
+            _context.Books.Remove(bookModel);
+
+            _context.SaveChanges();
+
+            return NoContent();
+        }
 
     }
 }
