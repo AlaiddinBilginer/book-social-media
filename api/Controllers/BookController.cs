@@ -15,12 +15,10 @@ namespace api.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
-        private readonly ApplicationDBContext _context;
         private readonly IBookRepository _bookRepo;
-        public BookController(ApplicationDBContext context, IBookRepository bookRepo)
+        public BookController(IBookRepository bookRepo)
         {
             _bookRepo = bookRepo;
-            _context = context;
         }
 
         [HttpGet]
@@ -30,7 +28,7 @@ namespace api.Controllers
 
             var bookDto = books.Select(s => s.ToBookDto());
 
-            return Ok(books);
+            return Ok(bookDto);
         }
 
         [HttpGet("{id}")]

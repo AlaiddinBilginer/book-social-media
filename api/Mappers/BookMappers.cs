@@ -19,7 +19,8 @@ namespace api.Mappers
                 Page = bookModel.Page,
                 PublicationDate = bookModel.PublicationDate,
                 Image = bookModel.Image,
-                AuthorId = bookModel.AuthorId
+                AuthorId = bookModel.AuthorId,
+                Comments = bookModel.BookComments.Select(c => c.ToBookCommentDto()).ToList()
             };
         }
 

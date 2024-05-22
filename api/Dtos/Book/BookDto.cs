@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Dtos.BookComment;
 
 namespace api.Dtos.Book
 {
@@ -14,5 +15,6 @@ namespace api.Dtos.Book
         public short PublicationDate { get; set; }
         public string Image { get; set; } = string.Empty;
         public int? AuthorId { get; set; }
+        public List<BookCommentDto> Comments { get; set; }
     }
 }
