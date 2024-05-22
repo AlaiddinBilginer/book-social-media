@@ -16,6 +16,7 @@ namespace api.Repository
         {
             _context = context;
         }
+
         public async Task<List<BookComment>> GetAllAsync()
         {
             return await _context.BookComments.ToListAsync();
@@ -25,5 +26,13 @@ namespace api.Repository
         {
             return await _context.BookComments.FindAsync(id);
         }
+
+        public async Task<BookComment> CreateAsync(BookComment commentModel)
+        {
+            await _context.BookComments.AddAsync(commentModel);
+            await _context.SaveChangesAsync();
+            return commentModel;
+        }
+
     }
 }

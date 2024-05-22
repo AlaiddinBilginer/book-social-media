@@ -10,5 +10,6 @@ namespace api.Interfaces
     {
         Task<List<BookComment>> GetAllAsync();
         Task<BookComment?> GetByIdAsync(int id);
+        Task<BookComment> CreateAsync(BookComment commentModel);
     }
 }

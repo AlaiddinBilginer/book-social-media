@@ -71,5 +71,10 @@ namespace api.Repository
 
             return bookModel;
         }
+
+        public async Task<bool> BookExist(int id)
+        {
+            return await _context.Books.AnyAsync(s => s.Id == id);
+        }
     }
 }
