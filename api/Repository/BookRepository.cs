@@ -35,7 +35,7 @@ namespace api.Repository
             return bookModel;
         }
 
-        public async Task<Book?> UpdateAsync(int id, UpdateBookRequestDto bookDto)
+        public async Task<Book?> UpdateAsync(int id, Book bookModel)
         {
             var existingBook = await _context.Books.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -44,12 +44,12 @@ namespace api.Repository
                 return null;
             }
 
-            existingBook.Name = bookDto.Name;
-            existingBook.Description = bookDto.Description;
-            existingBook.Page = bookDto.Page;
-            existingBook.PublicationDate = bookDto.PublicationDate;
-            existingBook.Image = bookDto.Image;
-            existingBook.AuthorId = bookDto.AuthorId;
+            existingBook.Name = bookModel.Name;
+            existingBook.Description = bookModel.Description;
+            existingBook.Page = bookModel.Page;
+            existingBook.PublicationDate = bookModel.PublicationDate;
+            existingBook.Image = bookModel.Image;
+            existingBook.AuthorId = bookModel.AuthorId;
 
             await _context.SaveChangesAsync();
 

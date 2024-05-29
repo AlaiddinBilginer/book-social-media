@@ -28,5 +28,13 @@ namespace api.Mappers
                 BookId = bookId
             };
         }
+
+        public static BookComment ToBookCommentFromUpdateDto(this UpdateBookCommentDto commentDto)
+        {
+            return new BookComment
+            {
+                Content = commentDto.Content,
+            };
+        }
     }
 }

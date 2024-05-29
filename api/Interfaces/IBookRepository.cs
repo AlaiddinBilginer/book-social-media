@@ -12,7 +12,7 @@ namespace api.Interfaces
         Task<List<Book>> GetAllAsync();
         Task<Book?> GetByIdAsync(int id);
         Task<Book> CreateAsync(Book bookModel);
-        Task<Book?> UpdateAsync(int id, UpdateBookRequestDto bookDto);
+        Task<Book?> UpdateAsync(int id, Book bookModel);
         Task<Book?> DeleteAsync(int id);
         Task<bool> BookExist(int id);
     }

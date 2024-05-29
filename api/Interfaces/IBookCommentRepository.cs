@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Dtos.BookComment;
 using api.models;
 
 namespace api.Interfaces
@@ -11,5 +12,7 @@ namespace api.Interfaces
         Task<List<BookComment>> GetAllAsync();
         Task<BookComment?> GetByIdAsync(int id);
         Task<BookComment> CreateAsync(BookComment commentModel);
+        Task<BookComment?> UpdateAsync(int id, BookComment commentModel);
+        Task<BookComment?> DeleteAsync(int id);
     }
 }

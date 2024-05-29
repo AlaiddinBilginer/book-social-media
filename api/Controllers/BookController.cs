@@ -56,7 +56,7 @@ namespace api.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBookRequestDto bookDto)
         {
-            var bookModel = await _bookRepo.UpdateAsync(id, bookDto);
+            var bookModel = await _bookRepo.UpdateAsync(id, bookDto.ToBookFromUpdateDto());
 
             if (bookModel == null)
             {
