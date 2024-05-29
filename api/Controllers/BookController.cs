@@ -31,7 +31,7 @@ namespace api.Controllers
             return Ok(bookDto);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var book = await _bookRepo.GetByIdAsync(id);
@@ -47,15 +47,21 @@ namespace api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateBookRequestDto bookDto)
         {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);    
+
             var bookModel = bookDto.ToBookFromCreateDto();
             await _bookRepo.CreateAsync(bookModel);
             return CreatedAtAction(nameof(GetById), new { id = bookModel.Id }, bookModel.ToBookDto());
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBookRequestDto bookDto)
         {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var bookModel = await _bookRepo.UpdateAsync(id, bookDto.ToBookFromUpdateDto());
 
             if (bookModel == null)
@@ -67,7 +73,7 @@ namespace api.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var bookModel = await _bookRepo.DeleteAsync(id);

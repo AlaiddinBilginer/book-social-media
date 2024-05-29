@@ -31,7 +31,7 @@ namespace api.Controllers
             return Ok(commentDto);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var comment = await _bookCommentRepo.GetByIdAsync(id);
@@ -44,9 +44,12 @@ namespace api.Controllers
             return Ok(comment.ToBookCommentDto());
         }
 
-        [HttpPost("{bookId}")]
+        [HttpPost("{bookId:int}")]
         public async Task<IActionResult> Create([FromRoute] int bookId, CreateBookCommentDto commentDto)
         {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             if (!await _bookRepo.BookExist(bookId))
             {
                 return BadRequest("Book does not exist!");
@@ -59,9 +62,12 @@ namespace api.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, UpdateBookCommentDto commentDto) 
         {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var comment = await _bookCommentRepo.UpdateAsync(id, commentDto.ToBookCommentFromUpdateDto());
 
             if(comment == null) {
@@ -72,7 +78,7 @@ namespace api.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id) 
         {
             var commentModel = await _bookCommentRepo.DeleteAsync(id);
