@@ -45,7 +45,9 @@ namespace api.Repository
                 }
             }
 
-            return await books.ToListAsync();
+            var skipNumber = (query.PageNumber - 1) * query.PageSize;
+
+            return await books.Skip(skipNumber).Take(query.PageSize).ToListAsync();
         }
 
         public async Task<Book?> GetByIdAsync(int id)
