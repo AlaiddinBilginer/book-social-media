@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.Book;
+using api.Helpers;
 using api.Interfaces;
 using api.models;
 using Microsoft.EntityFrameworkCore;
@@ -18,9 +19,33 @@ namespace api.Repository
             _context = context;
         }
 
-        public async Task<List<Book>> GetAllAsync()
+        public async Task<List<Book>> GetAllAsync(QueryObject query)
         {
-            return await _context.Books.Include(c => c.BookComments).ToListAsync();
+            var books = _context.Books.Include(c => c.BookComments).AsQueryable();
+
+            if(!string.IsNullOrWhiteSpace(query.BooName)) 
+            {
+                books = books.Where(b => b.Name.Contains(query.BooName));
+            }
+
+            if(!string.IsNullOrWhiteSpace(query.SortBy)) 
+            {
+                if(query.SortBy.Equals("Page", StringComparison.OrdinalIgnoreCase))
+                {
+                    books = query.IsDecsending ? 
+                        books.OrderByDescending(b => b.Page) :
+                        books.OrderBy(b => b.Page);
+                }
+
+                if(query.SortBy.Equals("PublicationDate", StringComparison.OrdinalIgnoreCase))
+                {
+                    books = query.IsDecsending ? 
+                        books.OrderByDescending(b => b.PublicationDate) :
+                        books.OrderBy(b => b.PublicationDate);
+                }
+            }
+
+            return await books.ToListAsync();
         }
 
         public async Task<Book?> GetByIdAsync(int id)
