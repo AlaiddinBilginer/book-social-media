@@ -21,7 +21,9 @@ namespace api.Repository
 
         public async Task<List<Book>> GetAllAsync(QueryObject query)
         {
-            var books = _context.Books.Include(c => c.BookComments).AsQueryable();
+            var books = _context.Books
+                                .Include(c => c.BookComments)
+                                .AsQueryable();
 
             if(!string.IsNullOrWhiteSpace(query.BooName)) 
             {

@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Dtos.Book;
 
-namespace api.models
+namespace api.Dtos.Author
 {
-    public class Author
+    public class AuthorDto
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
@@ -14,7 +15,6 @@ namespace api.models
         public string Nationality { get; set; } = string.Empty;
         public DateTime BirthDate { get; set; }
         public DateTime? DeathDate { get; set; }
-        public List<Book> Books { get; set; } = new List<Book>();
-        public List<AuthorComment> AuthorComments { get; set; } = new List<AuthorComment>();
+        public List<BookDto> Books { get; set; } = new List<BookDto>();
     }
 }
