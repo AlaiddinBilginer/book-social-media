@@ -19,7 +19,7 @@ namespace api.Repository
             _context = context;
         }
 
-        public async Task<List<Author>> GetAllAsync(QueryObject query)
+        public async Task<List<Author>> GetAllAsync(AuthorsQueryObject query)
         {
             var authors = _context.Authors.Include(b => b.Books).AsQueryable();
 

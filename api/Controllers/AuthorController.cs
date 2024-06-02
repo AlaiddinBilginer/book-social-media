@@ -21,7 +21,7 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] QueryObject query) 
+        public async Task<IActionResult> GetAll([FromQuery] AuthorsQueryObject query) 
         {
             var authors = await _authorRepo.GetAllAsync(query);
 

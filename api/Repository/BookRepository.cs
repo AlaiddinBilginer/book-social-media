@@ -19,29 +19,29 @@ namespace api.Repository
             _context = context;
         }
 
-        public async Task<List<Book>> GetAllAsync(QueryObject query)
+        public async Task<List<Book>> GetAllAsync(BooksQueryObject query)
         {
             var books = _context.Books
                                 .Include(c => c.BookComments)
                                 .AsQueryable();
 
-            if(!string.IsNullOrWhiteSpace(query.BooName)) 
+            if(!string.IsNullOrWhiteSpace(query.BookName)) 
             {
-                books = books.Where(b => b.Name.Contains(query.BooName));
+                books = books.Where(b => b.Name.Contains(query.BookName));
             }
 
             if(!string.IsNullOrWhiteSpace(query.SortBy)) 
             {
                 if(query.SortBy.Equals("Page", StringComparison.OrdinalIgnoreCase))
                 {
-                    books = query.IsDecsending ? 
+                    books = query.IsDescending ? 
                         books.OrderByDescending(b => b.Page) :
                         books.OrderBy(b => b.Page);
                 }
 
                 if(query.SortBy.Equals("PublicationDate", StringComparison.OrdinalIgnoreCase))
                 {
-                    books = query.IsDecsending ? 
+                    books = query.IsDescending ? 
                         books.OrderByDescending(b => b.PublicationDate) :
                         books.OrderBy(b => b.PublicationDate);
                 }

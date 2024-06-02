@@ -10,7 +10,7 @@ namespace api.Interfaces
 {
     public interface IBookRepository
     {
-        Task<List<Book>> GetAllAsync(QueryObject query);
+        Task<List<Book>> GetAllAsync(BooksQueryObject query);
         Task<Book?> GetByIdAsync(int id);
         Task<Book> CreateAsync(Book bookModel);
         Task<Book?> UpdateAsync(int id, Book bookModel);

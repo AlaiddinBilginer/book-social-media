@@ -9,7 +9,7 @@ namespace api.Interfaces
 {
     public interface IAuthorRepository
     {
-        Task<List<Author>> GetAllAsync(QueryObject query);
+        Task<List<Author>> GetAllAsync(AuthorsQueryObject query);
         Task<Author?> GetByIdAsync(int id);
         Task<Author> CreateAsync(Author authorModel);
         Task<Author?> UpdateAsync(int id, Author authorModel);

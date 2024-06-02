@@ -23,7 +23,7 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
+        public async Task<IActionResult> GetAll([FromQuery] BooksQueryObject query)
         {
             var books = await _bookRepo.GetAllAsync(query);
 
