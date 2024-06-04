@@ -14,5 +14,6 @@ namespace api.Interfaces
         Task<Author> CreateAsync(Author authorModel);
         Task<Author?> UpdateAsync(int id, Author authorModel);
         Task<Author?> DeleteAsync(int id);
+        Task<bool> AuthorExist(int id);
     }
 }

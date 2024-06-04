@@ -81,5 +81,10 @@ namespace api.Repository
             await _context.SaveChangesAsync();
             return existingAuthor;
         }
+
+        public async Task<bool> AuthorExist(int id)
+        {
+            return await _context.Authors.AnyAsync(a => a.Id == id);
+        }
     }
 }
