@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.BookComment;
+using api.Helpers;
 using api.Interfaces;
 using api.models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Repository
@@ -18,9 +20,18 @@ namespace api.Repository
             _context = context;
         }
 
-        public async Task<List<BookComment>> GetAllAsync()
+        public async Task<List<BookComment>> GetAllAsync(BookCommentQueryObject queryObject)
         {
-            return await _context.BookComments.ToListAsync();
+            var comments = _context.BookComments.AsQueryable();
+
+            comments = comments.Where(c => c.Book.Id == queryObject.BookId);
+
+            if(queryObject.IsDecsending == true)
+            {
+                comments = comments.OrderByDescending(c => c.CreatedOn);
+            }
+
+            return await comments.ToListAsync();
         }
 
         public async Task<BookComment?> GetByIdAsync(int id)
