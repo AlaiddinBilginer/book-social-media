@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class BookCategoryManyToMany : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,7 +22,7 @@ namespace api.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nationality = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeathDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DeathDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -82,21 +82,20 @@ namespace api.Migrations
                         name: "FK_Books_Authors_AuthorId",
                         column: x => x.AuthorId,
                         principalTable: "Authors",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "BookCategories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     BookId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookCategories", x => x.Id);
+                    table.PrimaryKey("PK_BookCategories", x => new { x.BookId, x.CategoryId });
                     table.ForeignKey(
                         name: "FK_BookCategories_Books_BookId",
                         column: x => x.BookId,
@@ -135,11 +134,6 @@ namespace api.Migrations
                 name: "IX_AuthorComments_AuthorId",
                 table: "AuthorComments",
                 column: "AuthorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BookCategories_BookId",
-                table: "BookCategories",
-                column: "BookId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookCategories_CategoryId",

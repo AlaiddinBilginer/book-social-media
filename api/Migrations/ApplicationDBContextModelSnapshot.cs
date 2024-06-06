@@ -120,21 +120,13 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.models.BookCategory", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<int>("BookId")
                         .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
+                    b.HasKey("BookId", "CategoryId");
 
                     b.HasIndex("CategoryId");
 

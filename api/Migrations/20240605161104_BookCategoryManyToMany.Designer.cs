@@ -12,8 +12,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240530125107_MakeDeathDateNullable")]
-    partial class MakeDeathDateNullable
+    [Migration("20240605161104_BookCategoryManyToMany")]
+    partial class BookCategoryManyToMany
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -123,21 +123,13 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.models.BookCategory", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<int>("BookId")
                         .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
+                    b.HasKey("BookId", "CategoryId");
 
                     b.HasIndex("CategoryId");
 
@@ -199,7 +191,8 @@ namespace api.Migrations
                 {
                     b.HasOne("api.models.Author", "Author")
                         .WithMany("Books")
-                        .HasForeignKey("AuthorId");
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Author");
                 });

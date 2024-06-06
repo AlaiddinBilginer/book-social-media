@@ -23,11 +23,17 @@ namespace api.Repository
         {
             var books = _context.Books
                                 .Include(c => c.BookComments)
+                                .Include(b => b.BookCategories).ThenInclude(c => c.Category)
                                 .AsQueryable();
 
             if(!string.IsNullOrWhiteSpace(query.BookName)) 
             {
                 books = books.Where(b => b.Name.Contains(query.BookName));
+            }
+
+            if (query.CategoryId.HasValue)
+            {
+                books = books.Where(b => b.BookCategories.Any(bc => bc.CategoryId == query.CategoryId));
             }
 
             if(!string.IsNullOrWhiteSpace(query.SortBy)) 
@@ -54,7 +60,10 @@ namespace api.Repository
 
         public async Task<Book?> GetByIdAsync(int id)
         {
-            return await _context.Books.Include(c => c.BookComments).FirstOrDefaultAsync(i => i.Id == id);
+            return await _context.Books
+                        .Include(c => c.BookComments)
+                        .Include(b => b.BookCategories).ThenInclude(c => c.Category)
+                        .FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task<Book> CreateAsync(Book bookModel)

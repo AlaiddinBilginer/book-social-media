@@ -30,6 +30,18 @@ namespace api.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<BookCategory>(x => x.HasKey(b => new { b.BookId, b.CategoryId }));
+
+            modelBuilder.Entity<BookCategory>()
+                .HasOne(u => u.Book)
+                .WithMany(u => u.BookCategories)
+                .HasForeignKey(u => u.BookId); 
+
+            modelBuilder.Entity<BookCategory>()
+                .HasOne(u => u.Category)
+                .WithMany(u => u.BookCategories)
+                .HasForeignKey(u => u.CategoryId); 
         }
     }
 }
