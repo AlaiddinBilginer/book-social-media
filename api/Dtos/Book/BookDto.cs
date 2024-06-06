@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Dtos.BookComment;
+using api.Dtos.Category;
 
 namespace api.Dtos.Book
 {
@@ -16,5 +17,6 @@ namespace api.Dtos.Book
         public string Image { get; set; } = string.Empty;
         public int? AuthorId { get; set; }
         public List<BookCommentDto> Comments { get; set; }
+        public List<CategoryDto> Categories { get; set; }
     }
 }

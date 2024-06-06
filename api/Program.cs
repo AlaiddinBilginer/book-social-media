@@ -1,5 +1,6 @@
 using api.Data;
 using api.Interfaces;
+using api.models;
 using api.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,7 @@ builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookCommentRepository, BookCommentRepository>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IAuthorCommentRepository, AuthorCommentRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
 
