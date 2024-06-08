@@ -1,4 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+// src/Redux/Slices/bookSlice.ts
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { fetchBooks } from '../../api/bookApi';
 
 interface Category {
@@ -37,10 +38,19 @@ const initialState: BooksState = {
   error: null,
 };
 
-export const fetchBooksAsync = createAsyncThunk('books/fetchBooks', async () => {
-  const response = await fetchBooks();
-  return response;
-});
+interface FetchBooksParams {
+  categoryId?: number;
+  sortBy?: 'Page' | 'PublicationDate';
+  isDescending?: boolean;
+}
+
+export const fetchBooksAsync = createAsyncThunk(
+  'books/fetchBooks',
+  async (params: FetchBooksParams) => {
+    const response = await fetchBooks(params.categoryId, params.sortBy, params.isDescending);
+    return response;
+  }
+);
 
 const bookSlice = createSlice({
   name: 'books',
