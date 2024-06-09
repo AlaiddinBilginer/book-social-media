@@ -13,9 +13,6 @@ const BookSideBar: React.FC = (): JSX.Element => {
   const error = useSelector((state: RootState) => state.categories.error);
   const [isOpen, setIsOpen] = useState(true);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [isSortOpen, setIsSortOpen] = useState(false);
-  const [isPageSortOpen, setIsPageSortOpen] = useState(false);
-  const [isDateSortOpen, setIsDateSortOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -28,13 +25,6 @@ const BookSideBar: React.FC = (): JSX.Element => {
   const handleCategoryClick = (categoryId: number) => {
     const searchParams = new URLSearchParams(location.search);
     searchParams.set('CategoryId', categoryId.toString());
-    navigate(`/book?${searchParams.toString()}`);
-  };
-
-  const handleSortClick = (sortBy: 'Page' | 'PublicationDate', isDescending: boolean) => {
-    const searchParams = new URLSearchParams(location.search);
-    searchParams.set('SortBy', sortBy);
-    searchParams.set('IsDescending', isDescending.toString());
     navigate(`/book?${searchParams.toString()}`);
   };
 
@@ -97,110 +87,6 @@ const BookSideBar: React.FC = (): JSX.Element => {
                         {category.name}
                       </button>
                     ))}
-                  </div>
-                )}
-              </div>
-              <div className="pb-2 border-b border-gray-300">
-                <button
-                  onClick={() => setIsSortOpen(!isSortOpen)}
-                  className="w-full text-left flex items-center px-3 py-2 text-base leading-6 font-medium text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150"
-                >
-                  Sırala
-                  <svg
-                    className={`ml-2 h-5 w-5 transform transition-transform ${
-                      isSortOpen ? 'rotate-180' : ''
-                    }`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    ></path>
-                  </svg>
-                </button>
-                {isSortOpen && (
-                  <div className="ml-4 space-y-1 custom-scrollbar">
-                    <button
-                      onClick={() => setIsPageSortOpen(!isPageSortOpen)}
-                      className="w-full text-left flex items-center px-3 py-2 mt-1 text-base leading-6 font-medium text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200 transition ease-in-out duration -150"
-                    >
-                      Sayfa Sayısına Göre
-                      <svg
-                        className={`ml-2 h-5 w-5 transform transition-transform ${
-                          isPageSortOpen ? 'rotate-180' : ''
-                        }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M19 9l-7 7-7-7"
-                        ></path>
-                      </svg>
-                    </button>
-                    {isPageSortOpen && (
-                      <div className="ml-4 space-y-1 custom-scrollbar">
-                        <button
-                          onClick={() => handleSortClick('Page', true)}
-                          className="w-full text-left px-3 py-2 text-base leading-6 font-medium text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150"
-                        >
-                          Azalan
-                        </button>
-                        <button
-                          onClick={() => handleSortClick('Page', false)}
-                          className="w-full text-left px-3 py-2 text-base leading-6 font-medium text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150"
-                        >
-                          Artan
-                        </button>
-                      </div>
-                    )}
-                    <button
-                      onClick={() => setIsDateSortOpen(!isDateSortOpen)}
-                      className="w-full text-left flex items-center px-3 py-2 mt-1 text-base leading-6 font-medium text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150"
-                    >
-                      Yayın Tarihine Göre
-                      <svg
-                        className={`ml-2 h-5 w-5 transform transition-transform ${
-                          isDateSortOpen ? 'rotate-180' : ''
-                        }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M19 9l-7 7-7-7"
-                        ></path>
-                      </svg>
-                    </button>
-                    {isDateSortOpen && (
-                      <div className="ml-4 space-y-1 custom-scrollbar">
-                        <button
-                          onClick={() => handleSortClick('PublicationDate', true)}
-                          className="w-full text-left px-3 py-2 text-base leading-6 font-medium text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150"
-                        >
-                          Azalan
-                        </button>
-                        <button
-                          onClick={() => handleSortClick('PublicationDate', false)}
-                          className="w-full text-left px-3 py-2 text-base leading-6 font-medium text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150"
-                        >
-                          Artan
-                        </button>
-                      </div>
-                    )}
                   </div>
                 )}
               </div>
