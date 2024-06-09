@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import logo from './logo.png';
 
 const Navbar = () => {
@@ -15,20 +15,26 @@ const Navbar = () => {
           <span className="text-xl font-semibold">Kitap Köşesi</span>
         </Link>
         <div className="flex items-center space-x-6 mt-4 md:mt-0">
-          <Link
+          <NavLink
             to="/book"
-            className="text-gray-700 hover:text-black transition duration-300 
-                       hover:font-semibold"
+            className={({ isActive }) =>
+              isActive
+                ? 'text-black font-semibold transition duration-300'
+                : 'text-gray-700 hover:text-black transition duration-300'
+            }
           >
             Kitaplar
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/author"
-            className="text-gray-700 hover:text-black transition duration-300 
-                       hover:font-semibold"
+            className={({ isActive }) =>
+              isActive
+                ? 'text-black font-semibold transition duration-300'
+                : 'text-gray-700 hover:text-black transition duration-300'
+            }
           >
             Yazarlar
-          </Link>
+          </NavLink>
           <div className="flex items-center">
             <Link
               to="/login"

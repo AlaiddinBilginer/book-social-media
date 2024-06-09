@@ -1,29 +1,12 @@
-// src/Redux/Slices/bookSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { fetchBooks } from '../../api/bookApi';
-
-interface Category {
-  id: number;
-  name: string;
-}
-
-interface Comment {
-  id: number;
-  content: string;
-  createdOn: string;
-  bookId: number;
-}
 
 interface Book {
   id: number;
   name: string;
-  description: string;
   page: number;
   publicationDate: number;
   image: string;
-  authorId: number;
-  comments: Comment[];
-  categories: Category[];
 }
 
 interface BooksState {

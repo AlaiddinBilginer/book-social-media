@@ -43,3 +43,16 @@ export const fetchCategories = async () => {
     throw error;
   }
 };
+
+export const fetchAuthors = async () => {
+  try {
+    const response = await apiClient.get('/author');
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Error fetching categories:', error.message);
+      throw new Error('Failed to fetch categories');
+    }
+    throw error;
+  }
+};

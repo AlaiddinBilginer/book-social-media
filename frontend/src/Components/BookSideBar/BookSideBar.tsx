@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../Redux/store';
 import { fetchCategoriesAsync } from '../../Redux/Slices/categorySlice';
 import { useNavigate, useLocation } from 'react-router-dom';
+import './BookSideBar.css';
 
 const BookSideBar: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -39,18 +40,18 @@ const BookSideBar: React.FC = (): JSX.Element => {
 
   return (
     <div
-      className={`flex flex-col ${isOpen ? 'w-72' : 'w-0'} transition-all duration-300shadow-lg`}
+      className={`flex flex-col ${isOpen ? 'w-64' : 'w-0'} transition-all duration-300 shadow-lg`}
     >
       <div
         className={`fixed inset-y-0 left-0 flex z-40 bg-white shadow-md transform ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
-        } transition-transform duration-300 ease-in-out`}
+        } transition-transform duration-300 ease-in-out custom-scrollbar`}
         style={{ top: '75px' }}
       >
-        <div className="relative flex-1 flex flex-col max-w-xs w-full">
-          <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
+        <div className="relative flex-1 flex flex-col max-w-xs w-full custom-scrollbar">
+          <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto custom-scrollbar">
             <div className="flex-shrink-0 flex items-center px-4 justify-between">
-              <h1 className="text-2xl font-bold text-gray-700">Kitapları Filtrele</h1>
+              <h1 className="text-xl font-bold text-gray-700">Kitapları Filtrele</h1>
               <button
                 className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none"
                 onClick={() => setIsOpen(false)}
@@ -61,7 +62,7 @@ const BookSideBar: React.FC = (): JSX.Element => {
                 />
               </button>
             </div>
-            <nav className="mt-5 px-2 space-y-1">
+            <nav className="mt-5 px-2 space-y-1 custom-scrollbar">
               <div className="pb-2 border-b border-gray-300">
                 <button
                   onClick={() => setIsCategoryOpen(!isCategoryOpen)}
@@ -86,7 +87,7 @@ const BookSideBar: React.FC = (): JSX.Element => {
                   </svg>
                 </button>
                 {isCategoryOpen && (
-                  <div className="ml-4 space-y-1">
+                  <div className="ml-4 space-y-1 custom-scrollbar">
                     {categories.map((category) => (
                       <button
                         key={category.id}
@@ -123,7 +124,7 @@ const BookSideBar: React.FC = (): JSX.Element => {
                   </svg>
                 </button>
                 {isSortOpen && (
-                  <div className="ml-4 space-y-1">
+                  <div className="ml-4 space-y-1 custom-scrollbar">
                     <button
                       onClick={() => setIsPageSortOpen(!isPageSortOpen)}
                       className="w-full text-left flex items-center px-3 py-2 mt-1 text-base leading-6 font-medium text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200 transition ease-in-out duration -150"
@@ -147,7 +148,7 @@ const BookSideBar: React.FC = (): JSX.Element => {
                       </svg>
                     </button>
                     {isPageSortOpen && (
-                      <div className="ml-4 space-y-1">
+                      <div className="ml-4 space-y-1 custom-scrollbar">
                         <button
                           onClick={() => handleSortClick('Page', true)}
                           className="w-full text-left px-3 py-2 text-base leading-6 font-medium text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150"
@@ -185,7 +186,7 @@ const BookSideBar: React.FC = (): JSX.Element => {
                       </svg>
                     </button>
                     {isDateSortOpen && (
-                      <div className="ml-4 space-y-1">
+                      <div className="ml-4 space-y-1 custom-scrollbar">
                         <button
                           onClick={() => handleSortClick('PublicationDate', true)}
                           className="w-full text-left px-3 py-2 text-base leading-6 font-medium text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150"
@@ -217,7 +218,7 @@ const BookSideBar: React.FC = (): JSX.Element => {
           >
             <FaRegArrowAltCircleRight
               className="text-gray-600 hover:text-gray-800"
-              style={{ fontSize: '2rem' }}
+              style={{ fontSize: '1.5rem' }}
             />
           </button>
         </div>
