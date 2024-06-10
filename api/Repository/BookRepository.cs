@@ -55,7 +55,7 @@ namespace api.Repository
 
             var skipNumber = (query.PageNumber - 1) * query.PageSize;
 
-            return await books.Skip(skipNumber).Take(query.PageSize).ToListAsync();
+            return await books.OrderBy(b => b.Id).Skip(skipNumber).Take(query.PageSize).ToListAsync();
         }
 
         public async Task<Book?> GetByIdAsync(int id)
