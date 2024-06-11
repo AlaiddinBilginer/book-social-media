@@ -25,7 +25,7 @@ namespace api.Controllers
         {
             var authors = await _authorRepo.GetAllAsync(query);
 
-            var authorDto = authors.Select(s => s.ToAuthorDto());
+            var authorDto = authors.Select(s => s.ToAuthorDto()).ToList();
 
             return Ok(authorDto);
         }

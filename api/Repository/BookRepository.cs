@@ -22,7 +22,7 @@ namespace api.Repository
         public async Task<List<Book>> GetAllAsync(BooksQueryObject query)
         {
             var books = _context.Books
-                                .Include(c => c.BookComments)
+                                .Include(c => c.BookComments).ThenInclude(a => a.AppUser)
                                 .Include(b => b.BookCategories).ThenInclude(c => c.Category)
                                 .AsQueryable();
 
@@ -61,7 +61,7 @@ namespace api.Repository
         public async Task<Book?> GetByIdAsync(int id)
         {
             return await _context.Books
-                        .Include(c => c.BookComments)
+                        .Include(c => c.BookComments).ThenInclude(a => a.AppUser)
                         .Include(b => b.BookCategories).ThenInclude(c => c.Category)
                         .FirstOrDefaultAsync(i => i.Id == id);
         }

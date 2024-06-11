@@ -12,8 +12,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240609164952_Identity")]
-    partial class Identity
+    [Migration("20240611060305_Migrations")]
+    partial class Migrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,20 @@ namespace api.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "040c4b71-36f6-4bad-a1f0-364fdeea5fff",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "1c7a5e7b-2c97-4e2c-a49a-c840b007fa45",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -266,6 +280,10 @@ namespace api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int?>("AuthorId")
                         .HasColumnType("int");
 
@@ -277,6 +295,8 @@ namespace api.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("AuthorId");
 
@@ -342,6 +362,10 @@ namespace api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int?>("BookId")
                         .HasColumnType("int");
 
@@ -353,6 +377,8 @@ namespace api.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("BookId");
 
@@ -429,9 +455,17 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.models.AuthorComment", b =>
                 {
+                    b.HasOne("api.models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("api.models.Author", "Author")
                         .WithMany("AuthorComments")
                         .HasForeignKey("AuthorId");
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Author");
                 });
@@ -467,9 +501,17 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.models.BookComment", b =>
                 {
+                    b.HasOne("api.models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("api.models.Book", "Book")
                         .WithMany("BookComments")
                         .HasForeignKey("BookId");
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Book");
                 });

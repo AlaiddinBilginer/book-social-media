@@ -20,7 +20,8 @@ namespace api.Mappers
                 Nationality = authorModel.Nationality,
                 BirthDate = authorModel.BirthDate,
                 DeathDate = authorModel.DeathDate,
-                Books = authorModel.Books.Select(b => b.ToBookDto()).ToList()
+                Books = authorModel.Books.Select(b => b.ToBookDto()).ToList(),
+                Comments = authorModel.AuthorComments.Select(c => c.ToAuthorCommentDto()).ToList()
             };
         }
 

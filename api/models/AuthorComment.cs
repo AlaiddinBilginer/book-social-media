@@ -14,5 +14,7 @@ namespace api.models
         public DateTime CreatedOn { get; set; } = DateTime.Now;
         public int? AuthorId { get; set; }
         public Author? Author { get; set; }
+        public string AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
     }
 }

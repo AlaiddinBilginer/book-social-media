@@ -20,21 +20,21 @@ namespace api.Repository
 
         public async Task<List<AuthorComment>> GetAllAsync(AuthorCommentQueryObject queryObject)
         {
-             var comments = _context.AuthorComments.AsQueryable();
+            var comments = _context.AuthorComments.AsQueryable();
 
-             comments = comments.Where(c => c.Author.Id == queryObject.AuthorId);
+            comments = comments.Where(c => c.Author.Id == queryObject.AuthorId);
 
             if(queryObject.IsDecsending == true)
             {
                 comments = comments.OrderByDescending(c => c.CreatedOn);
             }
 
-            return await comments.ToListAsync();
+            return await comments.Include(a => a.AppUser).ToListAsync();
         }
 
         public async Task<AuthorComment?> GetByIdAsync(int id)
         {
-            return await _context.AuthorComments.FindAsync(id);
+            return await _context.AuthorComments.Include(a => a.AppUser).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<AuthorComment> CreateAsync(AuthorComment commentModel)

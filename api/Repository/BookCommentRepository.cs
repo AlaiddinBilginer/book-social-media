@@ -31,12 +31,12 @@ namespace api.Repository
                 comments = comments.OrderByDescending(c => c.CreatedOn);
             }
 
-            return await comments.ToListAsync();
+            return await comments.Include(a => a.AppUser).ToListAsync();
         }
 
         public async Task<BookComment?> GetByIdAsync(int id)
         {
-            return await _context.BookComments.FindAsync(id);
+            return await _context.BookComments.Include(a => a.AppUser).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<BookComment> CreateAsync(BookComment commentModel)

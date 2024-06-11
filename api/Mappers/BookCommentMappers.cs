@@ -16,7 +16,8 @@ namespace api.Mappers
                 Id = bookCommentModel.Id,
                 Content = bookCommentModel.Content,
                 CreatedOn = bookCommentModel.CreatedOn,
-                BookId = bookCommentModel.BookId
+                BookId = bookCommentModel.BookId,
+                CreatedBy = bookCommentModel.AppUser.UserName,
             };
         }
 
