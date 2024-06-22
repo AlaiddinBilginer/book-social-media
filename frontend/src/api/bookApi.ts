@@ -55,3 +55,37 @@ export const fetchAuthors = async () => {
     throw error;
   }
 };
+
+export const searchBooks = async (bookName: string) => {
+  try {
+    const response = await apiClient.get('/book', {
+      params: {
+        BookName: bookName,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Error searching books:', error.message);
+      throw new Error('Failed to search books');
+    }
+    throw error;
+  }
+};
+
+export const searchAuthors = async (authorName: string) => {
+  try {
+    const response = await apiClient.get('/author', {
+      params: {
+        AuthorName: authorName,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Error searching authors:', error.message);
+      throw new Error('Failed to search authors');
+    }
+    throw error;
+  }
+};

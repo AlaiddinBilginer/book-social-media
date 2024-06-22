@@ -6,6 +6,7 @@ module.exports = {
       sm: '480px',
       md: '768px',
       lg: '1020px',
+      lg2: '1320px',
       xl: '1440px',
     },
     extend: {
@@ -14,6 +15,7 @@ module.exports = {
       },
       spacing: {
         180: '32rem',
+        150: '26rem',
       },
     },
   },

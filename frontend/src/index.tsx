@@ -4,7 +4,6 @@ import './index.css';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './Routes/Routes';
 import reportWebVitals from './reportWebVitals';
-import './index.css';
 import store from './Redux/store';
 import { Provider } from 'react-redux';
 

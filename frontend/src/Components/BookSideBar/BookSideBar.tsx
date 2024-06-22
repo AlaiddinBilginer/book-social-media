@@ -29,14 +29,11 @@ const BookSideBar: React.FC = (): JSX.Element => {
   };
 
   return (
-    <div
-      className={`flex flex-col ${isOpen ? 'w-64' : 'w-0'} transition-all duration-300 shadow-lg`}
-    >
+    <div className={`flex flex-col ${isOpen ? 'w-64' : 'w-0'} transition-all duration-300`}>
       <div
-        className={`fixed inset-y-0 left-0 flex z-40 bg-white shadow-md transform ${
+        className={`fixed inset-y-0 left-0 flex z-40 bg-white shadow-md transform mt-32 md:mt-20 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         } transition-transform duration-300 ease-in-out custom-scrollbar`}
-        style={{ top: '75px' }}
       >
         <div className="relative flex-1 flex flex-col max-w-xs w-full custom-scrollbar">
           <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto custom-scrollbar">
@@ -104,7 +101,7 @@ const BookSideBar: React.FC = (): JSX.Element => {
           >
             <FaRegArrowAltCircleRight
               className="text-gray-600 hover:text-gray-800"
-              style={{ fontSize: '1.5rem' }}
+              style={{ fontSize: '1.3rem' }}
             />
           </button>
         </div>
