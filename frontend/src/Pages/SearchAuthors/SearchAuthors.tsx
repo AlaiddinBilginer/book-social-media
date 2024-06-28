@@ -14,7 +14,7 @@ const SearchBooks: React.FC = () => {
         <div className="bg-red-100 text-red-800 p-4 rounded-md">Error: {error}</div>
       )}
       {status === 'succeeded' && searchResults.length === 0 && (
-        <div className="bg-yellow-100 text-yellow-800 p-4 rounded-md text-center">
+        <div className="bg-yellow-100 text-yellow-800 p-16 rounded-md text-center mt-24 mb-8">
           Aradığınız yazar bulunamadı.
         </div>
       )}

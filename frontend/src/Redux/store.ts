@@ -4,10 +4,12 @@ import categoryReducer from './Slices/categorySlice';
 import authorReducer from './Slices/authorSlice';
 import searchBookReducer from './Slices/searchBookSlice';
 import searchAuthorReducer from './Slices/searchAuthorSlice';
+import bookDetailReducer from './Slices/bookDetailSlice';
 
 const store = configureStore({
   reducer: {
     books: bookReducer,
+    book: bookDetailReducer,
     categories: categoryReducer,
     authors: authorReducer,
     searchBooks: searchBookReducer,

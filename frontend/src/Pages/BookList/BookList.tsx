@@ -8,6 +8,7 @@ import './BookList.css';
 import BookSideBar from '../../Components/BookSideBar/BookSideBar';
 import SortSelectButton from '../../Components/BookListComponents/SortSelectButton/SortSelectButton';
 import SearchForm from '../../Components/SearchForm/SearchForm';
+import Footer from '../../Components/Footer/Footer';
 
 const BookList: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -31,24 +32,26 @@ const BookList: React.FC = (): JSX.Element => {
   }, [categoryId, sortBy, isDescending, dispatch]);
 
   return (
-    <div className="mt-24 flex mt-32 md:mt-20 sm:mx-4">
-      <BookSideBar />
-      <div className="flex-1 bg-white">
-        <div className="lg:flex lg:justify-between">
-          <SearchForm searchType="book-list" />
-          <div className="flex sm:justify-end justify-center">
-            <SortSelectButton />
+    <div className="mt-24 flex flex-col md:mt-20 sm:mx-4 mb-24 min-h-screen">
+      <div className="flex">
+        <BookSideBar />
+        <div className="flex-1 bg-white p-4 md:pl-8">
+          <div className="lg:flex lg:justify-between mb-4">
+            <SearchForm searchType="book-list" />
+            <div className="flex sm:justify-end justify-center">
+              <SortSelectButton />
+            </div>
           </div>
+          {bookStatus === 'loading' && <p>Loading...</p>}
+          {bookStatus === 'succeeded' && (
+            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {books.map((book) => (
+                <BookCard key={book.id} book={book} />
+              ))}
+            </ul>
+          )}
+          {bookStatus === 'failed' && <p>{error}</p>}
         </div>
-        {bookStatus === 'loading' && <p>Loading...</p>}
-        {bookStatus === 'succeeded' && (
-          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {books.map((book) => (
-              <BookCard key={book.id} book={book} />
-            ))}
-          </ul>
-        )}
-        {bookStatus === 'failed' && <p>{error}</p>}
       </div>
     </div>
   );

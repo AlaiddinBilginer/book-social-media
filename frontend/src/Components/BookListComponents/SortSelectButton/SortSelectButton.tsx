@@ -25,7 +25,7 @@ const SortSelectButton = () => {
         <FaChevronDown className="ml-2 -mr-1 h-5 w-5 text-gray-500" />
       </button>
       {isDropdownOpen && (
-        <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-80">
+        <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 ">
           <div
             className="py-1"
             role="menu"

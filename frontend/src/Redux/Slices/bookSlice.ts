@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { fetchBooks, searchBooks } from '../../api/bookApi';
+import { fetchBooks } from '../../api/bookApi';
 
 interface Book {
   id: number;

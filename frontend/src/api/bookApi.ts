@@ -89,3 +89,16 @@ export const searchAuthors = async (authorName: string) => {
     throw error;
   }
 };
+
+export const fetchBookDetail = async (bookId: number) => {
+  try {
+    const response = await apiClient.get(`/book/${bookId}`);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Error fetching book:', error.message);
+      throw new Error('Failed to fetch books');
+    }
+    throw error;
+  }
+};
