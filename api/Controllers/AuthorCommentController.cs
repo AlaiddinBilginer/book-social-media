@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Dtos.AuthorComment;
+using api.Extensions;
 using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
+using api.models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -16,10 +19,12 @@ namespace api.Controllers
     {
         private readonly IAuthorCommentRepository _authorCommentRepo;
         private readonly IAuthorRepository _authorRepo;
-        public AuthorCommentController(IAuthorCommentRepository authorCommentRepo, IAuthorRepository authorRepo)
+        private readonly UserManager<AppUser> _userManager;
+        public AuthorCommentController(IAuthorCommentRepository authorCommentRepo, IAuthorRepository authorRepo, UserManager<AppUser> userManager)
         {
             _authorCommentRepo = authorCommentRepo;
             _authorRepo = authorRepo;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -56,7 +61,11 @@ namespace api.Controllers
                 return BadRequest("Author does not exist");
             }
 
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+
             var commentModel = commentDto.ToAuthorCommentFromCreateDto(authorId);
+            commentModel.AppUserId = appUser.Id;
             await _authorCommentRepo.CreateAsync(commentModel);
             return CreatedAtAction(nameof(GetById), new { id = commentModel.Id }, commentModel.ToAuthorCommentDto());
         }

@@ -21,7 +21,10 @@ namespace api.Repository
 
         public async Task<List<Author>> GetAllAsync(AuthorsQueryObject query)
         {
-            var authors = _context.Authors.Include(b => b.Books).AsQueryable();
+            var authors = _context.Authors
+                                    .Include(b => b.Books)
+                                    .Include(c => c.AuthorComments)
+                                    .ThenInclude(a => a.AppUser).AsQueryable();
 
             if(!string.IsNullOrWhiteSpace(query.AuthorName))
             {
@@ -36,7 +39,10 @@ namespace api.Repository
 
         public async Task<Author?> GetByIdAsync(int id)
         {
-            return await _context.Authors.Include(b => b.Books).FirstOrDefaultAsync(i => i.Id == id);
+            return await _context.Authors
+                                    .Include(b => b.Books)
+                                    .Include(c => c.AuthorComments).ThenInclude(a => a.AppUser)
+                                    .FirstOrDefaultAsync(i => i.Id == id);
 
         }
 

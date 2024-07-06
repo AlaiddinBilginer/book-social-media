@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Dtos.BookComment;
+using api.Extensions;
 using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
+using api.models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -16,10 +19,12 @@ namespace api.Controllers
     {
         private readonly IBookCommentRepository _bookCommentRepo;
         private readonly IBookRepository _bookRepo;
-        public BookCommentController(IBookCommentRepository bookCommentRepo, IBookRepository bookRepo)
+        private readonly UserManager<AppUser> _userManager;
+        public BookCommentController(IBookCommentRepository bookCommentRepo, IBookRepository bookRepo, UserManager<AppUser> userManager)
         {
             _bookCommentRepo = bookCommentRepo;
             _bookRepo = bookRepo;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -56,7 +61,11 @@ namespace api.Controllers
                 return BadRequest("Book does not exist!");
             }
 
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+
             var commentModel = commentDto.ToBookCommentFromCreateDto(bookId);
+            commentModel.AppUserId = appUser.Id;
             await _bookCommentRepo.CreateAsync(commentModel);
             return CreatedAtAction(nameof(GetById), new { id = commentModel.Id }, commentModel.ToBookCommentDto());
 

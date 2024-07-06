@@ -7,6 +7,7 @@ using api.Dtos.Book;
 using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,12 +28,13 @@ namespace api.Controllers
         {
             var books = await _bookRepo.GetAllAsync(query);
 
-            var bookDto = books.Select(s => s.ToBookDto());
+            var bookDto = books.Select(s => s.ToBookDto()).ToList();
 
             return Ok(bookDto);
         }
 
         [HttpGet("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var book = await _bookRepo.GetByIdAsync(id);

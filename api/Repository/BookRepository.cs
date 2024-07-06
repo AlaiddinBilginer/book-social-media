@@ -22,7 +22,7 @@ namespace api.Repository
         public async Task<List<Book>> GetAllAsync(BooksQueryObject query)
         {
             var books = _context.Books
-                                .Include(c => c.BookComments)
+                                .Include(c => c.BookComments).ThenInclude(a => a.AppUser)
                                 .Include(b => b.BookCategories).ThenInclude(c => c.Category)
                                 .AsQueryable();
 
@@ -55,13 +55,13 @@ namespace api.Repository
 
             var skipNumber = (query.PageNumber - 1) * query.PageSize;
 
-            return await books.Skip(skipNumber).Take(query.PageSize).ToListAsync();
+            return await books.OrderBy(b => b.Id).Skip(skipNumber).Take(query.PageSize).ToListAsync();
         }
 
         public async Task<Book?> GetByIdAsync(int id)
         {
             return await _context.Books
-                        .Include(c => c.BookComments)
+                        .Include(c => c.BookComments).ThenInclude(a => a.AppUser)
                         .Include(b => b.BookCategories).ThenInclude(c => c.Category)
                         .FirstOrDefaultAsync(i => i.Id == id);
         }
