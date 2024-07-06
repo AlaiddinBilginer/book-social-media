@@ -102,3 +102,16 @@ export const fetchBookDetail = async (bookId: number) => {
     throw error;
   }
 };
+
+export const fetchAuthorDetail = async (authorId: number) => {
+  try {
+    const response = await apiClient.get(`/author/${authorId}`);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Error fetching author:', error.message);
+      throw new Error('Failed to fetch author');
+    }
+    throw error;
+  }
+};

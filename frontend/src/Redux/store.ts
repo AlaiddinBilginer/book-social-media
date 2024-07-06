@@ -5,6 +5,7 @@ import authorReducer from './Slices/authorSlice';
 import searchBookReducer from './Slices/searchBookSlice';
 import searchAuthorReducer from './Slices/searchAuthorSlice';
 import bookDetailReducer from './Slices/bookDetailSlice';
+import authorDetailReducer from './Slices/authorDetailSlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     book: bookDetailReducer,
     categories: categoryReducer,
     authors: authorReducer,
+    author: authorDetailReducer,
     searchBooks: searchBookReducer,
     searchAuthors: searchAuthorReducer,
   },

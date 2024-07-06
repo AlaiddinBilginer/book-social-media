@@ -8,7 +8,7 @@ import './BookList.css';
 import BookSideBar from '../../Components/BookSideBar/BookSideBar';
 import SortSelectButton from '../../Components/BookListComponents/SortSelectButton/SortSelectButton';
 import SearchForm from '../../Components/SearchForm/SearchForm';
-import Footer from '../../Components/Footer/Footer';
+import { Oval } from 'react-loader-spinner'; // Spinner'ı import ediyoruz
 
 const BookList: React.FC = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,7 +32,7 @@ const BookList: React.FC = (): JSX.Element => {
   }, [categoryId, sortBy, isDescending, dispatch]);
 
   return (
-    <div className="mt-24 flex flex-col md:mt-20 sm:mx-4 mb-24 min-h-screen">
+    <div className="mt-24 flex flex-col md:mt-20 sm:mx-4 min-h-screen">
       <div className="flex">
         <BookSideBar />
         <div className="flex-1 bg-white p-4 md:pl-8">
@@ -42,7 +42,19 @@ const BookList: React.FC = (): JSX.Element => {
               <SortSelectButton />
             </div>
           </div>
-          {bookStatus === 'loading' && <p>Loading...</p>}
+          {bookStatus === 'loading' && (
+            <div className="flex justify-center items-center h-full mt-24">
+              <Oval
+                height={80}
+                width={80}
+                color="#123abc"
+                ariaLabel="oval-loading"
+                secondaryColor="#c1c1c1"
+                strokeWidth={2}
+                strokeWidthSecondary={2}
+              />
+            </div>
+          )}
           {bookStatus === 'succeeded' && (
             <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {books.map((book) => (

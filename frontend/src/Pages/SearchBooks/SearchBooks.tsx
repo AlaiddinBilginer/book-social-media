@@ -2,14 +2,27 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../Redux/store';
 import BookCard from '../../Components/BookCard/BookCard';
+import { Oval } from 'react-loader-spinner';
 
 const SearchBooks: React.FC = () => {
   const { searchResults, status, error } = useSelector((state: RootState) => state.searchBooks);
 
   return (
-    <div className="lg:m-24 m-4">
+    <div className="lg:m-24 m-4 min-h-screen">
       <h2 className="text-3xl font-bold text-center mb-8">Kitap Arama Sonuçlarınız</h2>
-      {status === 'loading' && <div>Loading...</div>}
+      {status === 'loading' && (
+        <div className="flex justify-center items-center h-full mt-56">
+          <Oval
+            height={80}
+            width={80}
+            color="#123abc"
+            ariaLabel="oval-loading"
+            secondaryColor="#c1c1c1"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
       {status === 'failed' && (
         <div className="bg-red-100 text-red-800 p-4 rounded-md">Error: {error}</div>
       )}

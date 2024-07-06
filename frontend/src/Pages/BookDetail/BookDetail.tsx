@@ -4,6 +4,7 @@ import { AppDispatch, RootState } from '../../Redux/store';
 import { fetchBookDetailAsync } from '../../Redux/Slices/bookDetailSlice';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import { Oval } from 'react-loader-spinner';
 
 const BookDetail = () => {
   let { bookId } = useParams<{ bookId: string }>();
@@ -19,8 +20,20 @@ const BookDetail = () => {
     }
   }, [dispatch, bookId]);
   return (
-    <div className="container mx-auto p-6 mt-24">
-      {status === 'loading' && <p>Loading...</p>}
+    <div className="container mx-auto p-6 mt-24 min-h-screen">
+      {status === 'loading' && (
+        <div className="flex justify-center items-center h-full mt-56">
+          <Oval
+            height={80}
+            width={80}
+            color="#123abc"
+            ariaLabel="oval-loading"
+            secondaryColor="#c1c1c1"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        </div>
+      )}
       {status === 'succeeded' && (
         <div className="max-w-5xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
           <div className="flex flex-col items-start p-6">

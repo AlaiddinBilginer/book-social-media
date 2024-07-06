@@ -95,13 +95,12 @@ const BookSideBar: React.FC = (): JSX.Element => {
       {!isOpen && (
         <div className="fixed z-50 top-20 left-2 sm:top-32 md:top-20">
           <button
-            className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md shadow-lg focus:outline-none focus:bg-gray-200 focus:text-gray-700 opacity-70 hover:opacity-100 transition-opacity duration-150"
-            aria-label="Open sidebar"
+            className="flex items-center justify-center h-10 w-7 rounded-full focus:outline-none"
             onClick={() => setIsOpen(true)}
           >
             <FaRegArrowAltCircleRight
               className="text-gray-600 hover:text-gray-800"
-              style={{ fontSize: '1.3rem' }}
+              style={{ fontSize: '1.5rem' }}
             />
           </button>
         </div>
