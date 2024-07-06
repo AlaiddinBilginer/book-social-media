@@ -1,46 +1,51 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import logo from './logo.png';
 
 const Navbar = () => {
   return (
-    <nav className="bg-white shadow-md py-4">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
+    <nav className="bg-white shadow-md py-4 fixed w-full top-0 z-10">
+      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-6 lg:px-20">
         <Link
           to="/"
-          className="flex items-center justify-center md:justify-start 
-                     transition duration-300 transform hover:scale-105"
+          className="flex items-center justify-center md:justify-start transition duration-300 transform hover:scale-105"
         >
           <img src={logo} alt="Logo" className="h-8 mr-4" />
-          <span className="text-xl font-semibold">Kitap Köşesi</span>
+          <span className="text-2xl font-bold text-gray-800">Kitap Köşesi</span>
         </Link>
         <div className="flex items-center space-x-6 mt-4 md:mt-0">
-          <Link
+          <NavLink
             to="/book"
-            className="text-gray-700 hover:text-black transition duration-300 
-                       hover:font-semibold"
+            className={({ isActive }) =>
+              isActive
+                ? 'text-blue-500 font-semibold transition duration-300'
+                : 'text-gray-700 hover:text-blue-500 transition duration-300'
+            }
           >
             Kitaplar
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/author"
-            className="text-gray-700 hover:text-black transition duration-300 
-                       hover:font-semibold"
+            className={({ isActive }) =>
+              isActive
+                ? 'text-blue-500 font-semibold transition duration-300'
+                : 'text-gray-700 hover:text-blue-500 transition duration-300'
+            }
           >
             Yazarlar
-          </Link>
+          </NavLink>
           <div className="flex items-center">
             <Link
               to="/login"
-              className="px-4 py-2 mx-4 bg-blue-500 text-white font-semibold rounded transition duration-300
-                         hover:bg-blue-600 hover:text-gray-100"
+              className="px-6 py-2 mx-2 bg-blue-500 text-white font-semibold rounded-full transition duration-300
+                         hover:bg-blue-600 hover:scale-105"
             >
               Giriş Yap
             </Link>
             <Link
               to="/register"
-              className="px-4 py-2 bg-green-500 text-white font-semibold rounded transition duration-300
-                         hover:bg-green-600 hover:text-gray-100"
+              className="px-6 py-2 bg-green-500 text-white font-semibold rounded-full transition duration-300
+                         hover:bg-green-600 hover:scale-105"
             >
               Kayıt Ol
             </Link>
